@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.axis path,
+.axis line {
+	fill: none;
+    stroke: #000;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.js"></script>
+<script>
+
+var margin = {top: 40, right: 40, bottom: 40, left:40},
+	width = 800 - margin.left - margin.right, 
+	height = 400 - margin.top - margin.bottom;
+
+//Create the SVG Viewport
+ var svgContainer = d3.select("body").append("svg")
+                                      .attr("width", width + margin.left + margin.right) // include the margins
+                                      .attr("height", height + margin.top + margin.bottom)
+                                    .append("g")
+    								  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+ 
+ //Create the Scale we will use for the Axis
+ var xAxisScale = d3.scale.linear()
+                          .domain([0, height])
+                          .range([0, width]);
+
+ var yAxisScale = d3.scale.linear()
+ 						  .range([height, 0]);
+
+//Create the Axis functions
+var xAxis = d3.svg.axis()
+                   .scale(xAxisScale);
+
+var yAxis = d3.svg.axis()
+                   .scale(yAxisScale)
+                   .orient("left");
+
+
+
+//Create an SVG group Element for the Axis elements and call the Axis functions
+var xAxisGroup = svgContainer.append("g")
+							  .attr("class", "axis")
+							  .attr("transform", "translate(0," + height + ")")
+                              .call(xAxis);
+
+var yAxisGroup = svgContainer.append("g")
+							  .attr("class", "axis")
+                              .call(yAxis);
+
+</script>
